@@ -117,6 +117,7 @@ namespace learning
             _spriteBatch.Begin();
             Menu.Draw(_spriteBatch);
             _spriteBatch.Draw(texture, pos, rndcolor);
+            _spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y + speed), rndcolor);
             _spriteBatch.End();
 
             base.Draw(gameTime);
