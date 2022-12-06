@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Web;
 
 namespace learning
 {
@@ -12,7 +13,7 @@ namespace learning
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Texture2D texture;
+        Texture2D texture, apple;
         Vector2 pos = Vector2.Zero;
         int speed = 32;
         int period = 100;
@@ -43,6 +44,7 @@ namespace learning
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             texture = Content.Load<Texture2D>("Part_32x32");
+            apple = Content.Load<Texture2D>("apple");
             Menu.Background = Content.Load<Texture2D>("background");
             Menu.Font = Content.Load<SpriteFont>("MC");
             Menu.MenuSprite = Content.Load<Texture2D>("MenuSprite");
@@ -119,6 +121,7 @@ namespace learning
             Menu.Draw(_spriteBatch);
             _spriteBatch.Draw(texture, pos, rndcolor);
             _spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y + speed), rndcolor);
+            _spriteBatch.Draw(apple, new Vector2(10 * speed, 25 * speed), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
