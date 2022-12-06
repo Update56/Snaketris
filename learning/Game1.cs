@@ -15,13 +15,13 @@ namespace learning
         private SpriteBatch _spriteBatch;
         Texture2D texture, apple;
         Vector2 pos = Vector2.Zero;
-        int speed = 32;
+        public const int speed = 32;
         int period = 100;
         int currentTimeUpd = 0;
-        Color rndcolor = GetRandomColor();
+        public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
         public int windowwidth = 640;
-        List<Vector2> snake = new List<Vector2>();
+        
 
         public Game1()
         {
@@ -35,7 +35,8 @@ namespace learning
             _graphics.PreferredBackBufferHeight = windowheight;
             _graphics.PreferredBackBufferWidth = windowwidth;
             _graphics.ApplyChanges();
-            snake.Add(Vector2.Zero);
+            Snake.init_list();
+            //snake.Add(Vector2.Zero);
 
             base.Initialize();
         }
@@ -44,6 +45,7 @@ namespace learning
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             texture = Content.Load<Texture2D>("Part_32x32");
+            Snake.part = Content.Load<Texture2D>("Part_32x32");
             apple = Content.Load<Texture2D>("apple");
             Menu.Background = Content.Load<Texture2D>("background");
             Menu.Font = Content.Load<SpriteFont>("MC");
@@ -60,52 +62,53 @@ namespace learning
 
             currentTimeUpd += gameTime.ElapsedGameTime.Milliseconds; //Ограничение fps
 
-            if (windowwidth - pos.X - speed <= 0 )
-            {
-                pos.X = windowwidth - speed;
-            }
-            if (windowheight - pos.Y - speed <= 0)
-            {
-                pos.Y = windowheight - speed;
-            }
-            if (pos.X <= 0)
-            {
-                pos.X = 0;
-            }
-            if (pos.Y <= 0)
-            {
-               pos.Y = 0;
-            }
+            //if (windowwidth - pos.X - speed <= 0 )
+            //{
+            //    pos.X = windowwidth - speed;
+            //}
+            //if (windowheight - pos.Y - speed <= 0)
+            //{
+            //    pos.Y = windowheight - speed;
+            //}
+            //if (pos.X <= 0)
+            //{
+            //    pos.X = 0;
+            //}
+            //if (pos.Y <= 0)
+            //{
+            //   pos.Y = 0;
+            //}
 
-                if (currentTimeUpd > period)
-                {
+            if (currentTimeUpd > period)
+            {
                 currentTimeUpd -= period;
-                
-                    if (keyboardState.IsKeyDown(Keys.Left))
-                    {
-                        snake[0] = new Vector2 { X = snake[0].X - speed, Y = snake[0].Y};
-                        pos.X -= speed;
-                        rndcolor = GetRandomColor();
-                    }
 
-                    if (keyboardState.IsKeyDown(Keys.Right))
-                    {
-                        pos.X += speed;
-                        rndcolor = GetRandomColor();
-                    }
+                Snake.Update();
+                //        if (keyboardState.IsKeyDown(Keys.Left))
+                //        {
+                //            //snake[0] = new Vector2 { X = snake[0].X - speed, Y = snake[0].Y};
+                //            pos.X -= speed;
+                //            rndcolor = GetRandomColor();
+                //        }
 
-                    if (keyboardState.IsKeyDown(Keys.Up))
-                    {
-                        pos.Y -= speed;
-                        rndcolor = GetRandomColor();
-                    }
+                //        if (keyboardState.IsKeyDown(Keys.Right))
+                //        {
+                //            pos.X += speed;
+                //            rndcolor = GetRandomColor();
+                //        }
 
-                    if (keyboardState.IsKeyDown(Keys.Down))
-                    {
-                        pos.Y += speed;
-                        rndcolor = GetRandomColor();
-                    }
-                
+                //        if (keyboardState.IsKeyDown(Keys.Up))
+                //        {
+                //            pos.Y -= speed;
+                //            rndcolor = GetRandomColor();
+                //        }
+
+                //        if (keyboardState.IsKeyDown(Keys.Down))
+                //        {
+                //            pos.Y += speed;
+                //            rndcolor = GetRandomColor();
+                //        }
+
 
             };
             Menu.Update();
@@ -119,9 +122,10 @@ namespace learning
 
             _spriteBatch.Begin();
             Menu.Draw(_spriteBatch);
-            _spriteBatch.Draw(texture, pos, rndcolor);
-            _spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y + speed), rndcolor);
-            _spriteBatch.Draw(apple, new Vector2(10 * speed, 25 * speed), Color.White);
+            Snake.Draw(_spriteBatch);
+            //_spriteBatch.Draw(texture, pos, rndcolor);
+            //_spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y + speed), rndcolor);
+            //_spriteBatch.Draw(apple, new Vector2(10 * speed, 25 * speed), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
