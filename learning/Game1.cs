@@ -81,7 +81,6 @@ namespace learning
                 
                     if (keyboardState.IsKeyDown(Keys.Left))
                     {
-                        snake[0] = new Vector2 { X = snake[0].X - speed, Y = snake[0].Y};
                         pos.X -= speed;
                         rndcolor = GetRandomColor();
                     }
