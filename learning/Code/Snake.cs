@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
 using SharpDX.MediaFoundation;
+using SharpDX.XInput;
 
 namespace learning
 {
@@ -17,29 +18,34 @@ namespace learning
     {
         public static Texture2D part { get; set; }
         static List<Vector2> part_pos = new List<Vector2>();
+        static bool flag = false;
         static public void Update()
         {
+ 
             KeyboardState keyboardState = Keyboard.GetState();
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.Three);
 
-            if (keyboardState.IsKeyDown(Keys.Left))
+            
+
+            if (gamePadState.IsButtonDown(Buttons.DPadLeft) || keyboardState.IsKeyDown(Keys.Left))
             {
                 relocate();
                 part_pos[0] = new Vector2(part_pos[0].X - Game1.speed, part_pos[0].Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (gamePadState.IsButtonDown(Buttons.DPadRight) || keyboardState.IsKeyDown(Keys.Right))
             {
                 relocate();
                 part_pos[0] = new Vector2(part_pos[0].X + Game1.speed, part_pos[0].Y);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (gamePadState.IsButtonDown(Buttons.DPadUp) || keyboardState.IsKeyDown(Keys.Up))
             {
                 relocate();
                 part_pos[0] = new Vector2(part_pos[0].X, part_pos[0].Y - Game1.speed);
             }
 
-            if (keyboardState.IsKeyDown(Keys.Down))
+            if (gamePadState.IsButtonDown(Buttons.DPadDown) || keyboardState.IsKeyDown(Keys.Down))
             {
                 relocate();
                 part_pos[0] = new Vector2(part_pos[0].X, part_pos[0].Y + Game1.speed);
