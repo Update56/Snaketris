@@ -21,11 +21,8 @@ namespace learning
         static bool flag = false;
         static public void Update()
         {
- 
             KeyboardState keyboardState = Keyboard.GetState();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.Three);
-
-            
 
             if (gamePadState.IsButtonDown(Buttons.DPadLeft) || keyboardState.IsKeyDown(Keys.Left))
             {
@@ -69,12 +66,6 @@ namespace learning
             {
                 part_pos.Add(new Vector2(part_pos[i - 1].X + Game1.speed, part_pos[i - 1].Y));
             }
-
-            //part_pos[0] = Vector2.Zero; //1-ый (0-ой) змей элемент от которого идёт создание
-            //for (int i = 1; i < part_pos.Count; i++) //установка координаты для каждой новой части
-            //{
-            //    part_pos[i] = new Vector2(part_pos[i - 1].X + Game1.speed, part_pos[i - 1].Y);
-            //}
 
             part_pos.Reverse(); //разворот списка что-бы попа стала головой
         }

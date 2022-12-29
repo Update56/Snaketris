@@ -9,7 +9,7 @@ using SharpDX.Direct3D9;
 
 namespace learning
 {
-    static class Menu
+    internal static class Menu
     {
         public static Texture2D Background { get; set; }
         public static Texture2D MenuSprite { get; set; }

@@ -36,7 +36,7 @@ namespace learning
             _graphics.PreferredBackBufferWidth = windowwidth;
             _graphics.ApplyChanges();
             Snake.init_list();
-            //snake.Add(Vector2.Zero);
+            Field.Initialize();
 
             base.Initialize();
         }
@@ -62,54 +62,11 @@ namespace learning
 
             currentTimeUpd += gameTime.ElapsedGameTime.Milliseconds; //Ограничение fps
 
-            //if (windowwidth - pos.X - speed <= 0 )
-            //{
-            //    pos.X = windowwidth - speed;
-            //}
-            //if (windowheight - pos.Y - speed <= 0)
-            //{
-            //    pos.Y = windowheight - speed;
-            //}
-            //if (pos.X <= 0)
-            //{
-            //    pos.X = 0;
-            //}
-            //if (pos.Y <= 0)
-            //{
-            //   pos.Y = 0;
-            //}
-
             if (currentTimeUpd > period)
             {
                 currentTimeUpd -= period;
 
                 Snake.Update();
-                //        if (keyboardState.IsKeyDown(Keys.Left))
-                //        {
-                //            //snake[0] = new Vector2 { X = snake[0].X - speed, Y = snake[0].Y};
-                //            pos.X -= speed;
-                //            rndcolor = GetRandomColor();
-                //        }
-
-                //        if (keyboardState.IsKeyDown(Keys.Right))
-                //        {
-                //            pos.X += speed;
-                //            rndcolor = GetRandomColor();
-                //        }
-
-                //        if (keyboardState.IsKeyDown(Keys.Up))
-                //        {
-                //            pos.Y -= speed;
-                //            rndcolor = GetRandomColor();
-                //        }
-
-                //        if (keyboardState.IsKeyDown(Keys.Down))
-                //        {
-                //            pos.Y += speed;
-                //            rndcolor = GetRandomColor();
-                //        }
-
-
             };
             Menu.Update();
 
@@ -123,9 +80,6 @@ namespace learning
             _spriteBatch.Begin();
             Menu.Draw(_spriteBatch);
             Snake.Draw(_spriteBatch);
-            //_spriteBatch.Draw(texture, pos, rndcolor);
-            //_spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y + speed), rndcolor);
-            //_spriteBatch.Draw(apple, new Vector2(10 * speed, 25 * speed), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
