@@ -17,7 +17,7 @@ namespace learning
     internal class Snake
     {
         public static Texture2D part { get; set; }
-        static List<Vector2> part_pos = new List<Vector2>();
+        static List<Point> part_pos = new List<Point>();
         static bool flag = false;
         static public void Update()
         {
@@ -27,46 +27,45 @@ namespace learning
             if (gamePadState.IsButtonDown(Buttons.DPadLeft) || keyboardState.IsKeyDown(Keys.Left))
             {
                 relocate();
-                part_pos[0] = new Vector2(part_pos[0].X - Game1.speed, part_pos[0].Y);
+                part_pos[0] -= new Point(1, 0);
             }
 
             if (gamePadState.IsButtonDown(Buttons.DPadRight) || keyboardState.IsKeyDown(Keys.Right))
             {
                 relocate();
-                part_pos[0] = new Vector2(part_pos[0].X + Game1.speed, part_pos[0].Y);
+                part_pos[0] += new Point(1, 0);
             }
 
             if (gamePadState.IsButtonDown(Buttons.DPadUp) || keyboardState.IsKeyDown(Keys.Up))
             {
                 relocate();
-                part_pos[0] = new Vector2(part_pos[0].X, part_pos[0].Y - Game1.speed);
+                part_pos[0] -= new Point(0, 1);
             }
 
             if (gamePadState.IsButtonDown(Buttons.DPadDown) || keyboardState.IsKeyDown(Keys.Down))
             {
                 relocate();
-                part_pos[0] = new Vector2(part_pos[0].X, part_pos[0].Y + Game1.speed);
+                part_pos[0] += new Point(0, 1);
             }
         }
         static public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < part_pos.Count; i++) //отрисовка змеи по частям
             {
-                spriteBatch.Draw(part, part_pos[i], Game1.rndcolor);
+                spriteBatch.Draw(part, new Vector2(part_pos[i].X * 32, part_pos[i].Y * 32), Game1.rndcolor);
+                // part_pos[i].ToVector2()
             }
-            
         }
         public static void init_list() //инит новой змейки
         {
             part_pos.Clear();
-            Random rnd = new Random();
+            Random rnd = new Random(Environment.TickCount);
             int temp = rnd.Next(0, 6);
-            part_pos.Add(Vector2.Zero); //1-ый (0-ой) змей элемент от которого идёт создание
+            part_pos.Add(Point.Zero); //1-ый (0-ой) змей элемент от которого идёт создание
             for (int i = 1; i < temp; i++) //создание остальный элементов 
             {
-                part_pos.Add(new Vector2(part_pos[i - 1].X + Game1.speed, part_pos[i - 1].Y));
+                part_pos.Add(part_pos[i - 1] + new Point(1, 0));
             }
-
             part_pos.Reverse(); //разворот списка что-бы попа стала головой
         }
 

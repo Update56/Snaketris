@@ -22,6 +22,7 @@ namespace learning
         public int windowheight = 960;
         public int windowwidth = 640;
         
+        
 
         public Game1()
         {
@@ -54,7 +55,6 @@ namespace learning
 
         protected override void Update(GameTime gameTime)
         {
-
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -80,6 +80,7 @@ namespace learning
             _spriteBatch.Begin();
             Menu.Draw(_spriteBatch);
             Snake.Draw(_spriteBatch);
+            Field.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -87,7 +88,6 @@ namespace learning
         
         public static Color GetRandomColor()
         {
-
             Random rnd = new Random();
             int r = rnd.Next(0, 255);
             int g = rnd.Next(0, 255);

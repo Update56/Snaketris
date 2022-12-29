@@ -24,8 +24,6 @@ namespace learning
             spriteBatch.Draw(Background, new Rectangle(0, 0, 640, 960), color);
             //spriteBatch.DrawString(Font, "Snaketris", new Vector2(190, 250), Game1.GetRandomColor());
             spriteBatch.Draw(MenuSprite, new Vector2(300, 250), null, Color.White, MenuSpriteRotate, new Vector2(MenuSprite.Width / 2f, MenuSprite.Height / 2f), MenuSpriteScale, SpriteEffects.None, 0f);
-
-
         }
         static public void Update()
         {
