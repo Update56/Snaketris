@@ -3,9 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Web;
+using System.Windows.Forms;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace learning
 {
@@ -21,8 +26,6 @@ namespace learning
         public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
         public int windowwidth = 640;
-        
-        
 
         public Game1()
         {
@@ -36,7 +39,7 @@ namespace learning
             _graphics.PreferredBackBufferHeight = windowheight;
             _graphics.PreferredBackBufferWidth = windowwidth;
             _graphics.ApplyChanges();
-            Snake.init_list();
+            Snake.Init_snake();
             Field.Initialize();
 
             base.Initialize();
@@ -65,9 +68,15 @@ namespace learning
             if (currentTimeUpd > period)
             {
                 currentTimeUpd -= period;
-
                 Snake.Update();
             };
+
+            if (Snake.snake_pos[0].X == Field.field_size_x || Snake.snake_pos[0].X == -1 || Snake.snake_pos[0].Y == -1 || Snake.snake_pos[0].Y == Field.field_size_y)
+            {
+                MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Exit();
+            }
+            Field.Update();
             Menu.Update();
 
             base.Update(gameTime);
@@ -82,10 +91,9 @@ namespace learning
             Snake.Draw(_spriteBatch);
             Field.Draw(_spriteBatch);
             _spriteBatch.End();
-
             base.Draw(gameTime);
         }
-        
+
         public static Color GetRandomColor()
         {
             Random rnd = new Random();
