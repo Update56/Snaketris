@@ -55,7 +55,6 @@ namespace learning
                     Stop_snake();
                 }
             }
-            
         }
         static public void Draw(SpriteBatch spriteBatch)
         {

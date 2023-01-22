@@ -70,14 +70,23 @@ namespace learning
 
             if (currentTimeUpd > period)
             {
-                currentTimeUpd -= period;
+                currentTimeUpd -= period; 
                 Snake.Update();
             }
 
-            if (Snake.snake_pos[0].X == Field.field_size_x || Snake.snake_pos[0].X == -1 || Snake.snake_pos[0].Y == -1 || Snake.snake_pos[0].Y == Field.field_size_y)
+            if (Snake.snake_pos[0].X == Field.field_size_x || Snake.snake_pos[0].X == -1 || Snake.snake_pos[0].Y == -1 || Snake.snake_pos[0].Y == 10)
             {
                 MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Exit();
+            }
+
+            foreach (var item in Snake.snake_pos.GetRange(1, Snake.snake_pos.Count - 1))
+            {
+                if (Snake.snake_pos[0] == item)
+                {
+                    MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Exit();
+                }
             }
 
             status_bar = "Time: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
@@ -115,5 +124,6 @@ namespace learning
             Color RandColor = new(r, g, b);
             return RandColor;
         }
+
     }
 }

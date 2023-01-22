@@ -85,7 +85,7 @@ namespace learning.Code
                 }
             }
 
-            Game1.score++;
+            Game1.score += 10;
 
             return;
         }
