@@ -57,6 +57,7 @@ namespace learning
             Menu.Background = Content.Load<Texture2D>("background");
             Menu.Font = Content.Load<SpriteFont>("MC");
             Menu.MenuSprite = Content.Load<Texture2D>("MenuSprite");
+            Field.Vines = Content.Load<Texture2D>("InvSprite");
         }
 
         protected override void Update(GameTime gameTime)
@@ -89,7 +90,7 @@ namespace learning
                 }
             }
 
-            status_bar = "Time: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
+            status_bar = "Freezing in:\n" + ().ToString() + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
                 + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString()
                 + "\nScore:\n" + score.ToString();
             Field.Update();

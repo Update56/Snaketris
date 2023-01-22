@@ -17,6 +17,7 @@ namespace learning.Code
         public const int field_size_x = 20;
         public const int field_size_y = 30;
         static bool[,] game_field = new bool[field_size_x, field_size_y];
+        static public Texture2D Vines;
         static public void Update()
         {
             for (int y = 0; y < field_size_y; y++)
@@ -34,6 +35,7 @@ namespace learning.Code
                 for (int x = 0; x < field_size_x; x++)
                     if (game_field[x, y] == true)
                         spriteBatch.Draw(Snake.part, new Vector2(x * 32, y * 32), Color.Silver);
+            spriteBatch.Draw(Vines, new Vector2(0, 304), Color.White);
         }
         static public void Freezing(List<Point> snake)
         {

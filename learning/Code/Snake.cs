@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace learning
     {
         public static Texture2D part { get; set; }
         static public List<Point> snake_pos = new List<Point>();
+        public static System.Timers.Timer aTimer;
         static bool control = true;
         static public void Update()
         {
@@ -72,6 +74,8 @@ namespace learning
                 snake_pos.Add(snake_pos[i - 1] + new Point(1, 0));
 
             snake_pos.Reverse(); //разворот списка что-бы попа стала головой
+
+            Time_count();
         }
 
         public static void Stop_snake()
@@ -79,6 +83,7 @@ namespace learning
             control = false;
             Field.Freezing(snake_pos);
             snake_pos.Clear();
+            aTimer.Close();
             Init_snake();
         }
         static void Relocate() //перемещение тела змейки (см "Visualisation_ver2.gif" )
@@ -87,5 +92,19 @@ namespace learning
                 snake_pos[i] = snake_pos[i - 1];
         }
         static public void Control_on() => control = true;
+
+        static public void Time_count()
+        {
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = 4000 + snake_pos.Count * 1000;
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = false;
+            aTimer.Start();
+        }
+
+        static public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Stop_snake();
+        }
     }
 }
