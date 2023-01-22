@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using learning.Code;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -25,7 +26,9 @@ namespace learning
         int currentTimeUpd = 0;
         public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
-        public int windowwidth = 640;
+        public int windowwidth = 790; //640
+        public static int score = 0;
+        string status_bar;
 
         public Game1()
         {
@@ -69,13 +72,17 @@ namespace learning
             {
                 currentTimeUpd -= period;
                 Snake.Update();
-            };
+            }
 
             if (Snake.snake_pos[0].X == Field.field_size_x || Snake.snake_pos[0].X == -1 || Snake.snake_pos[0].Y == -1 || Snake.snake_pos[0].Y == Field.field_size_y)
             {
                 MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Exit();
             }
+
+            status_bar = "Time: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
+                + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString()
+                + "\nScore:\n" + score.ToString();
             Field.Update();
             Menu.Update();
 
@@ -87,10 +94,15 @@ namespace learning
             GraphicsDevice.Clear(Color.LightSteelBlue);
 
             _spriteBatch.Begin();
+
             Menu.Draw(_spriteBatch);
             Snake.Draw(_spriteBatch);
             Field.Draw(_spriteBatch);
+            _spriteBatch.DrawString(Menu.Font, status_bar, new Vector2(650, 10), Color.DarkSlateBlue);
+
+
             _spriteBatch.End();
+
             base.Draw(gameTime);
         }
 

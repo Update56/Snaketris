@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Threading.Tasks.Sources;
 
-namespace learning
+namespace learning.Code
 {
     internal static class Field
     {
@@ -22,7 +23,7 @@ namespace learning
             {
                 Line_fullness(y);
             }
-           
+
         }
         static public void Initialize()
         {
@@ -31,7 +32,7 @@ namespace learning
         {
             for (int y = 0; y < field_size_y; y++)
                 for (int x = 0; x < field_size_x; x++)
-                    if (game_field[x,y] == true)
+                    if (game_field[x, y] == true)
                         spriteBatch.Draw(Snake.part, new Vector2(x * 32, y * 32), Color.Silver);
         }
         static public void Freezing(List<Point> snake)
@@ -83,6 +84,9 @@ namespace learning
                     game_field[x, u] = game_field[x, u - 1];
                 }
             }
+
+            Game1.score++;
+
             return;
         }
     }
