@@ -22,7 +22,7 @@ namespace learning
         Texture2D texture, apple;
         Vector2 pos = Vector2.Zero;
         public const int speed = 32;
-        int period = 100;
+        int period = 200;
         int currentTimeUpd = 0;
         public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
@@ -90,7 +90,7 @@ namespace learning
                 }
             }
 
-            status_bar = "Freezing in:\n" + ().ToString() + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
+            status_bar = "Freezing in:\n" + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
                 + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString()
                 + "\nScore:\n" + score.ToString();
             Field.Update();
@@ -109,7 +109,6 @@ namespace learning
             Snake.Draw(_spriteBatch);
             Field.Draw(_spriteBatch);
             _spriteBatch.DrawString(Menu.Font, status_bar, new Vector2(650, 10), Color.DarkSlateBlue);
-
 
             _spriteBatch.End();
 

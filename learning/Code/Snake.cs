@@ -22,42 +22,64 @@ namespace learning
         static public List<Point> snake_pos = new List<Point>();
         public static System.Timers.Timer aTimer;
         static bool control = true;
+        static private Direction direction;
+        enum Direction //направления движения
+        {
+            LEFT,
+            RIGHT,
+            UP,
+            DOWN
+        }
+
         static public void Update()
         {
             KeyboardState keyboardState = Keyboard.GetState();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
 
-            if (control)
+            switch (direction)
             {
-                if (gamePadState.IsButtonDown(Buttons.DPadLeft) || keyboardState.IsKeyDown(Keys.Left))
-                {
+                case Direction.LEFT:
                     Relocate();
                     snake_pos[0] -= new Point(1, 0);
-                }
-
-                if (gamePadState.IsButtonDown(Buttons.DPadRight) || keyboardState.IsKeyDown(Keys.Right))
-                {
+                    break;
+                case Direction.RIGHT:
                     Relocate();
                     snake_pos[0] += new Point(1, 0);
-                }
-
-                if (gamePadState.IsButtonDown(Buttons.DPadUp) || keyboardState.IsKeyDown(Keys.Up))
-                {
+                    break;
+                case Direction.UP:
                     Relocate();
                     snake_pos[0] -= new Point(0, 1);
-                }
-
-                if (gamePadState.IsButtonDown(Buttons.DPadDown) || keyboardState.IsKeyDown(Keys.Down))
-                {
+                    break;
+                case Direction.DOWN:
                     Relocate();
                     snake_pos[0] += new Point(0, 1);
-                }
-                if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
-                {
-                    Stop_snake();
-                }
+                    break;
+            }
+
+            if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
+            {
+                Stop_snake();
+            }
+
+            switch (direction)
+            {
+                case Direction.LEFT:
+                case Direction.RIGHT:
+                    if (gamePadState.IsButtonDown(Buttons.DPadDown) || keyboardState.IsKeyDown(Keys.Down))
+                        direction = Direction.DOWN;
+                    else if (gamePadState.IsButtonDown(Buttons.DPadUp) || keyboardState.IsKeyDown(Keys.Up))
+                        direction = Direction.UP;
+                    break;
+                case Direction.UP:
+                case Direction.DOWN:
+                    if (gamePadState.IsButtonDown(Buttons.DPadLeft) || keyboardState.IsKeyDown(Keys.Left))
+                        direction = Direction.LEFT;
+                    else if (gamePadState.IsButtonDown(Buttons.DPadRight) || keyboardState.IsKeyDown(Keys.Right))
+                        direction = Direction.RIGHT;
+                    break;
             }
         }
+
         static public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < snake_pos.Count; i++) //отрисовка змеи по частям
@@ -74,6 +96,8 @@ namespace learning
                 snake_pos.Add(snake_pos[i - 1] + new Point(1, 0));
 
             snake_pos.Reverse(); //разворот списка что-бы попа стала головой
+
+            direction = Direction.RIGHT;
 
             Time_count();
         }
