@@ -90,7 +90,13 @@ namespace learning
                 }
             }
 
-            status_bar = "Freezing in:\n" + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
+            if(Snake.time_check == gameTime.TotalGameTime.Seconds)
+            {
+                Snake.Stop_snake();
+                Snake.time_check = gameTime.TotalGameTime.Seconds + Snake.snake_pos.Count + 4;
+            }
+
+            status_bar = "Freezing in:\n" + (Snake.time_check - gameTime.TotalGameTime.Seconds).ToString() + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
                 + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString()
                 + "\nScore:\n" + score.ToString();
             Field.Update();
