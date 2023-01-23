@@ -20,11 +20,10 @@ namespace learning
     {
         public static Texture2D part { get; set; }
         static public List<Point> snake_pos = new List<Point>();
-        public static System.Timers.Timer aTimer;
-        static bool control = true;
-        public static int time_check = 0;
-        static GameTime gameTime = new GameTime();
-        static private Direction direction;
+        static bool control = true; 
+        static Direction direction;
+        static KeyboardState keyboardState, oldkeyboardState;
+        static GamePadState gamePadState;
         enum Direction //направления движения
         {
             LEFT,
@@ -32,12 +31,8 @@ namespace learning
             UP,
             DOWN
         }
-
         static public void Update()
         {
-            KeyboardState keyboardState = Keyboard.GetState();
-            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
-
             switch (direction)
             {
                 case Direction.LEFT:
@@ -57,11 +52,12 @@ namespace learning
                     snake_pos[0] += new Point(0, 1);
                     break;
             }
-
-            if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
-            {
-                Stop_snake();
-            }
+        }
+        static public void Control()
+        {
+            oldkeyboardState = keyboardState;
+            keyboardState = Keyboard.GetState();
+            gamePadState = GamePad.GetState(PlayerIndex.One);
 
             switch (direction)
             {
@@ -80,10 +76,10 @@ namespace learning
                         direction = Direction.RIGHT;
                     break;
             }
-            if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
+
+            if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter) && !oldkeyboardState.IsKeyDown(Keys.Enter))
             {
-                Stop_snake();
-                time_check = gameTime.TotalGameTime.Seconds + snake_pos.Count + 4;
+                Game1.Freeze_time();
             }
         }
 
@@ -105,8 +101,6 @@ namespace learning
             snake_pos.Reverse(); //разворот списка что-бы попа стала головой
 
             direction = Direction.RIGHT;
-
-            time_check = gameTime.TotalGameTime.Seconds + snake_pos.Count + 4;
         }
 
         public static void Stop_snake()
@@ -114,7 +108,6 @@ namespace learning
             control = false;
             Field.Freezing(snake_pos);
             snake_pos.Clear();
-            //aTimer.Close();
             Init_snake();
         }
         static void Relocate() //перемещение тела змейки (см "Visualisation_ver2.gif" )

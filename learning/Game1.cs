@@ -26,9 +26,11 @@ namespace learning
         int currentTimeUpd = 0;
         public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
-        public int windowwidth = 790; //640
+        public int windowwidth = 780; //640
         public static int score = 0;
         string status_bar;
+        public static int time_check = 5;
+        static int seconds = 0;
 
         public Game1()
         {
@@ -62,6 +64,7 @@ namespace learning
 
         protected override void Update(GameTime gameTime)
         {
+            seconds = gameTime.TotalGameTime.Seconds;
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -75,30 +78,36 @@ namespace learning
                 Snake.Update();
             }
 
+            Snake.Control();
+
             if (Snake.snake_pos[0].X == Field.field_size_x || Snake.snake_pos[0].X == -1 || Snake.snake_pos[0].Y == -1 || Snake.snake_pos[0].Y == 10)
             {
-                MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Exit();
+                Game_over();
+            }
+
+            for (int x = 0; x < Field.field_size_x - 1; x++)
+            {
+                if (Field.game_field[x, 9])
+                {
+                    Game_over();
+                    break;
+                }
             }
 
             foreach (var item in Snake.snake_pos.GetRange(1, Snake.snake_pos.Count - 1))
             {
                 if (Snake.snake_pos[0] == item)
                 {
-                    MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Exit();
+                    Game_over();
                 }
             }
 
-            if(Snake.time_check == gameTime.TotalGameTime.Seconds)
+            if (time_check == gameTime.TotalGameTime.Seconds)
             {
-                Snake.Stop_snake();
-                Snake.time_check = gameTime.TotalGameTime.Seconds + Snake.snake_pos.Count + 4;
+                Freeze_time();
             }
 
-            status_bar = "Freezing in:\n" + (Snake.time_check - gameTime.TotalGameTime.Seconds).ToString() + "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
-                + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString()
-                + "\nScore:\n" + score.ToString();
+            status_bar = "Freezing\nin: " + ( time_check - gameTime.TotalGameTime.Seconds).ToString() + "\nScore:\n" + score.ToString();
             Field.Update();
             Menu.Update();
 
@@ -115,6 +124,8 @@ namespace learning
             Snake.Draw(_spriteBatch);
             Field.Draw(_spriteBatch);
             _spriteBatch.DrawString(Menu.Font, status_bar, new Vector2(650, 10), Color.DarkSlateBlue);
+            _spriteBatch.DrawString(Menu.Font, "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
+                + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString(), new Vector2(650, windowheight - 100), Color.DarkSlateBlue);
 
             _spriteBatch.End();
 
@@ -130,6 +141,15 @@ namespace learning
             Color RandColor = new(r, g, b);
             return RandColor;
         }
-
+        static public void Freeze_time()
+        {
+            Snake.Stop_snake();
+            time_check = seconds + Snake.snake_pos.Count + 4;
+        }
+        public void Game_over()
+        {
+            MessageBox.Show("Game Over", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Exit();
+        }
     }
 }

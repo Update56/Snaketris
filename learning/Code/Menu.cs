@@ -14,7 +14,6 @@ namespace learning
         public static Texture2D Background { get; set; }
         public static Texture2D MenuSprite { get; set; }
         static int timeCounter = 0;
-        static Color color;
         public static SpriteFont Font { get; set; }
         static float MenuSpriteRotate;
         static float MenuSpriteScale;

@@ -16,7 +16,7 @@ namespace learning.Code
     {
         public const int field_size_x = 20;
         public const int field_size_y = 30;
-        static bool[,] game_field = new bool[field_size_x, field_size_y];
+        static public bool[,] game_field = new bool[field_size_x, field_size_y];
         static public Texture2D Vines;
         static public void Update()
         {
@@ -24,7 +24,7 @@ namespace learning.Code
             {
                 Line_fullness(y);
             }
-
+            
         }
         static public void Initialize()
         {
@@ -86,7 +86,6 @@ namespace learning.Code
                     game_field[x, u] = game_field[x, u - 1];
                 }
             }
-
             Game1.score += 10;
 
             return;
