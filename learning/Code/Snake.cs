@@ -22,6 +22,8 @@ namespace learning
         static public List<Point> snake_pos = new List<Point>();
         public static System.Timers.Timer aTimer;
         static bool control = true;
+        public static int time_check = 0;
+        static GameTime gameTime = new GameTime();
         static private Direction direction;
         enum Direction //направления движения
         {
@@ -77,12 +79,11 @@ namespace learning
                     else if (gamePadState.IsButtonDown(Buttons.DPadRight) || keyboardState.IsKeyDown(Keys.Right))
                         direction = Direction.RIGHT;
                     break;
-                }
-                if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
-                {
-                    Stop_snake();
-                    time_check = gameTime.TotalGameTime.Seconds + snake_pos.Count + 4;
-                }
+            }
+            if (gamePadState.IsButtonDown(Buttons.A) || keyboardState.IsKeyDown(Keys.Enter))
+            {
+                Stop_snake();
+                time_check = gameTime.TotalGameTime.Seconds + snake_pos.Count + 4;
             }
         }
 
@@ -105,10 +106,7 @@ namespace learning
 
             direction = Direction.RIGHT;
 
-            Time_count();
             time_check = gameTime.TotalGameTime.Seconds + snake_pos.Count + 4;
-
-            //Time_count();
         }
 
         public static void Stop_snake()
@@ -125,19 +123,5 @@ namespace learning
                 snake_pos[i] = snake_pos[i - 1];
         }
         static public void Control_on() => control = true;
-
-        /*static public void Time_count()
-        {
-            aTimer = new System.Timers.Timer();
-            aTimer.Interval = 4000 + snake_pos.Count * 1000;
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = false;
-            aTimer.Start();
-        }
-
-        static public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            Stop_snake();
-        }*/
     }
 }
