@@ -122,7 +122,7 @@ namespace learning
             Field.Draw(_spriteBatch);
             _spriteBatch.DrawString(Menu.Font, status_bar, new Vector2(650, 10), Color.DarkSlateBlue);
             _spriteBatch.DrawString(Menu.Font, "\nTime: \n" + (gameTime.TotalGameTime.Minutes / 10 % 10).ToString() + (gameTime.TotalGameTime.Minutes % 10).ToString() + ':'
-                + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString(), new Vector2(650, windowheight - 100), Color.DarkSlateBlue);
+                + (gameTime.TotalGameTime.Seconds / 10 % 10).ToString() + (gameTime.TotalGameTime.Seconds % 10).ToString() + "\nf1 : help", new Vector2(650, windowheight - 135), Color.DarkSlateBlue) ;
 
             _spriteBatch.End();
 

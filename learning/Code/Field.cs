@@ -34,7 +34,7 @@ namespace learning.Code
                         spriteBatch.Draw(Snake.part, new Vector2(x * Game1.speed, y * Game1.speed), Color.Silver);
             spriteBatch.Draw(Vines, new Vector2(0, 304), Color.White);
         }
-        static public void Freezing(List<Point> snake)
+        static public void Freezing(List<Point> snake) 
         {
             bool flag = true;
             do
