@@ -19,18 +19,16 @@ namespace learning
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Texture2D texture, apple;
-        Vector2 pos = Vector2.Zero;
         public const int speed = 32;
         int period = 200;
         int currentTimeUpd = 0;
-        public static Color rndcolor = GetRandomColor();
         public int windowheight = 960;
         public int windowwidth = 780; //640
         public static int score = 0;
         string status_bar;
         public static int time_check = 5;
         static int seconds = 0;
+        
 
         public Game1()
         {
@@ -45,7 +43,6 @@ namespace learning
             _graphics.PreferredBackBufferWidth = windowwidth;
             _graphics.ApplyChanges();
             Snake.Init_snake();
-            Field.Initialize();
 
             base.Initialize();
         }
@@ -53,9 +50,7 @@ namespace learning
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            texture = Content.Load<Texture2D>("Part_32x32");
             Snake.part = Content.Load<Texture2D>("Part_32x32");
-            apple = Content.Load<Texture2D>("apple");
             Menu.Background = Content.Load<Texture2D>("background");
             Menu.Font = Content.Load<SpriteFont>("MC");
             Menu.MenuSprite = Content.Load<Texture2D>("MenuSprite");
@@ -69,6 +64,9 @@ namespace learning
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+             if (GamePad.GetState(PlayerIndex.One).Buttons.Y == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.F1))
+                MessageBox.Show("Данная игра является продуктом, полученным в результате совмещения двух игр: Snake и Tetris и работает по совмещённым правилам.\r\nИгра начинается с того, что из левого верхнего угла по горизонтали выползает змейка случайной длины, состоящая из 1-5 блоков, которой пользователь может управлять в пределах верхней части игрового поля, которая отделена от нижней части лианами. \r\nЗадача игрока заключается в том, чтобы за определённое время, которое зависит от длины змейки (для одного блока - 5 секунд, для двух - 6 секунд, и т.д. +1 секунда за каждый блок), сформировать змейкой определённую фигуру, которая по нажатию клавиши \"Enter\" на клавиатуре или кнопки \"А\" на геймпаде или по истечению времени  \"упадёт\" в нижнюю часть игрового поля, предназначеную для тетриса (вся нижняя часть поля до лиан). При заполнении фигурами полного ряда составленный ряд исчезает и игроку начисляются 10 очков. В случае, если фигуры на поле тетриса  \"пересекают\" лианы или если змейка выходит за пределы своего игрового поля или врезается в хвот, игра считается оконченной.", "Правила", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             currentTimeUpd += gameTime.ElapsedGameTime.Milliseconds; //Ограничение fps
 
@@ -119,7 +117,6 @@ namespace learning
             GraphicsDevice.Clear(Color.LightSteelBlue);
 
             _spriteBatch.Begin();
-
             Menu.Draw(_spriteBatch);
             Snake.Draw(_spriteBatch);
             Field.Draw(_spriteBatch);

@@ -14,7 +14,7 @@ namespace learning.Code
 {
     internal static class Field
     {
-        public const int field_size_x = 20;
+        public const int field_size_x = 20; 
         public const int field_size_y = 30;
         static public bool[,] game_field = new bool[field_size_x, field_size_y];
         static public Texture2D Vines;
@@ -26,15 +26,12 @@ namespace learning.Code
             }
             
         }
-        static public void Initialize()
-        {
-        }
         static public void Draw(SpriteBatch spriteBatch)
         {
             for (int y = 0; y < field_size_y; y++)
                 for (int x = 0; x < field_size_x; x++)
                     if (game_field[x, y] == true)
-                        spriteBatch.Draw(Snake.part, new Vector2(x * 32, y * 32), Color.Silver);
+                        spriteBatch.Draw(Snake.part, new Vector2(x * Game1.speed, y * Game1.speed), Color.Silver);
             spriteBatch.Draw(Vines, new Vector2(0, 304), Color.White);
         }
         static public void Freezing(List<Point> snake)

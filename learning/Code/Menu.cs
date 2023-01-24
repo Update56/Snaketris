@@ -21,12 +21,12 @@ namespace learning
         static public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Background, new Rectangle(0, 0, 640, 960), Color.White);
-            spriteBatch.Draw(MenuSprite, new Vector2(300, 250), null, Color.White, MenuSpriteRotate, new Vector2(MenuSprite.Width / 2f, MenuSprite.Height / 2f), MenuSpriteScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(MenuSprite, new Vector2(300, 150), null, Color.White, MenuSpriteRotate, new Vector2(MenuSprite.Width / 2f, MenuSprite.Height / 2f), MenuSpriteScale, SpriteEffects.None, 0f);
         }
         static public void Update()
         {
             MenuSpriteScale = (float)(Math.Sin(timeCounter * (Math.PI / 180.0) / 4) / 4 + 1);
-            MenuSpriteRotate = (float)(Math.Sin(timeCounter * (Math.PI / 180.0))/4);
+            MenuSpriteRotate = (float)(Math.Sin(timeCounter * (Math.PI / 180.0)) / 4);
             timeCounter++;
         }
     }

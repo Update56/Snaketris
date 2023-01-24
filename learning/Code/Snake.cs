@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
 using SharpDX.MediaFoundation;
 using SharpDX.XInput;
+using System.CodeDom;
 
 namespace learning
 {
@@ -24,6 +25,7 @@ namespace learning
         static Direction direction;
         static KeyboardState keyboardState, oldkeyboardState;
         static GamePadState gamePadState;
+        private static Color rndcolor = Color.White;
         enum Direction //направления движения
         {
             LEFT,
@@ -86,10 +88,11 @@ namespace learning
         static public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < snake_pos.Count; i++) //отрисовка змеи по частям
-                spriteBatch.Draw(part, new Vector2(snake_pos[i].X * 32, snake_pos[i].Y * 32), Game1.rndcolor);
+                spriteBatch.Draw(part, new Vector2(snake_pos[i].X * Game1.speed, snake_pos[i].Y * Game1.speed), rndcolor);
         }
         public static void Init_snake() //инит новой змейки
         {
+            rndcolor = Game1.GetRandomColor();
             snake_pos.Clear();
             Random rnd = new Random(Environment.TickCount);
             int temp = rnd.Next(0, 6);
